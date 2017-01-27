@@ -4,7 +4,7 @@
 
 # Session Data files
 .RData
-
+.rda
 # Example code in package build process
 *-Ex.R
 
@@ -15,7 +15,7 @@
 /*.Rcheck/
 
 # RStudio files
-.Rproj.user/
+.Rproj*
 
 # produced vignettes
 vignettes/*.html
