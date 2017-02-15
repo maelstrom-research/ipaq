@@ -13,6 +13,11 @@ ipaq_computetime(dt_,freq = 'PA_MOD_FREQ_CLEAN',min = 'PA_MOD_TIME_MIN',hr = 'PA
 ipaq_computetime(dt_,freq = 'PA_WALK_FREQ_CLEAN',min = 'PA_WALK_TIME_MIN',hr = 'PA_WALK_TIME_HR',time_output = 'PA_WALK_TIME_DAY')
 
 
+# Readjust activity time_day AND freq: time in [10, 960]; freq ==0 -> time = 0 
+ipaq_readj_freq_time(dt_, freq = 'PA_VIG_FREQ_CLEAN',time = 'PA_VIG_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_MOD_FREQ_CLEAN', time = 'PA_MOD_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_WALK_FREQ_CLEAN',time = 'PA_WALK_TIME_DAY')
+
 
 # Compute activity time per/week
 ipaq_mult(dt_,vars = c('PA_VIG_TIME_DAY','PA_VIG_FREQ_CLEAN'),output = 'PA_VIG_TIME_WK')
@@ -53,10 +58,6 @@ ipaq_category(dt_,output = 'PA_LEVEL_S',vig_freq = 'PA_VIG_FREQ_CLEAN', mod_freq
 
 
 
-# -----------clean final dataset--------------------------
-ipaq_rm(dt_,vars = names(dt_)[grepl('_WK|_CLEAN', names(dt_))] )
-# clean gt 960*7
-ipaq_clean_gt960_7(dt_,vars = names(dt_)[!grepl('time|freq|job|ID|A_ADM|isgt960', names(dt_))] )
 
 
 
