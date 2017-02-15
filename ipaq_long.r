@@ -26,6 +26,23 @@ ipaq_computetime(dt_,freq = 'PA_LEISURE_WALK_FREQ_CLEAN',min = 'PA_LEISURE_WALK_
 ipaq_computetime(dt_,freq = 'PA_GARDEN_VIG_FREQ_CLEAN',min = 'PA_GARDEN_VIG_TIME_MIN',hr = 'PA_GARDEN_VIG_TIME_HR',time_output = 'PA_GARDEN_VIG_TIME_DAY')
 
 
+
+# Readjust activity time_day AND freq: time in [10, 960]; freq ==0 -> time = 0 
+ipaq_readj_freq_time(dt_, freq = 'PA_WRK_WALK_FREQ_CLEAN',time = 'PA_WRK_WALK_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_WRK_VIG_FREQ_CLEAN', time = 'PA_WRK_VIG_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_WRK_MOD_FREQ_CLEAN',time = 'PA_WRK_MOD_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_CYCLING_FREQ_CLEAN',time = 'PA_CYCLING_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_TRANS_WALK_FREQ_CLEAN',time = 'PA_TRANS_WALK_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_LEISURE_MOD_FREQ_CLEAN',time = 'PA_LEISURE_MOD_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_GARDEN_MOD_FREQ_CLEAN',time = 'PA_GARDEN_MOD_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_LEISURE_VIG_FREQ_CLEAN',time = 'PA_LEISURE_VIG_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_INSIDE_MOD_FREQ_CLEAN',time = 'PA_INSIDE_MOD_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_LEISURE_WALK_FREQ_CLEAN',time = 'PA_LEISURE_WALK_TIME_DAY')
+ipaq_readj_freq_time(dt_, freq = 'PA_GARDEN_VIG_FREQ_CLEAN',time = 'PA_GARDEN_VIG_TIME_DAY')
+
+
+
+
 # Compute activity time per/week
 ipaq_mult(dt_,vars = c('PA_WRK_WALK_FREQ_CLEAN', 'PA_WRK_WALK_TIME_DAY'),output = 'PA_WRK_WALK_TIME_WK')
 ipaq_mult(dt_,vars = c('PA_WRK_VIG_FREQ_CLEAN', 'PA_WRK_VIG_TIME_DAY'),output = 'PA_WRK_VIG_TIME_WK')
@@ -105,9 +122,5 @@ ipaq_category(dt_,output = 'PA_LEVEL_L',vig_freq = 'PA_VIG_FREQ_EST', mod_freq =
 
 
 
-# -----------clean final dataset--------------------------
-ipaq_rm( dt_,vars = names(dt_)[grepl('_WK|_CLEAN|_PROP|_PARTIAL_|_EST', names(dt_))] )
-# clean gt 960*7
-ipaq_clean_gt960_7(dt_,vars = names(dt_)[!grepl('time|freq|job|ID|A_ADM', names(dt_))] )
 
 
