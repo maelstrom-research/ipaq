@@ -17,7 +17,7 @@ if('init.ipaq' %in% search())detach(init.ipaq)
 
 ##### -----------Load dependencies
 .load_packages('data.table'); .load_packages('bit64');.load_packages('stringi');
-
+options(datatable.showProgress = TRUE)
 
 ################# put everything in an evironment ##########
 init.ipaq<-new.env()
@@ -28,7 +28,7 @@ init.ipaq<-new.env()
 
 init.ipaq$ipaq_clean_gt7 <- function(dt_,vars)
 {
-  for(x in vars) { set(dt_,j = k<-paste0(x,'_CLEAN'),value = dt_[,eval(as.name(x))]); set(dt_,i= which(dt_[[x]]>7),j = k,value = NA_integer_)}
+  for(x in vars) { set(dt_,j = k<-paste0(x,'_CLEAN'),value = dt_[,floor(eval(as.name(x)))]); set(dt_,i= which(dt_[[x]]>7),j = k,value = NA_integer_)}
 }
 
 
@@ -72,6 +72,18 @@ init.ipaq$ipaq_computetime <- function(dt_, freq, min, hr, time_output)
 }
 
 
+
+
+init.ipaq$ipaq_readj_freq_time <- function(dt_,time,freq) 
+{
+  freq_v <- dt_[,eval(as.name(freq))];  time_v <- dt_[,eval(as.name(time))]
+  set(dt_, which(freq_v==0L),j=time,value = 0L)
+  set(dt_, which(time_v>960L),j=time,value = NA_integer_)
+  set(dt_, which(time_v<10L),j=time,value = 0L)
+  set(dt_, which(time_v==0L),j=freq,value = 0L)
+}
+
+
 init.ipaq$ipaq_mult <- function(dt_,output,vars,num=1L)
 {
   dt_[,(output):=Reduce('*',.SD)*eval(num),.SDcols=vars]
@@ -107,6 +119,12 @@ init.ipaq$ipaq_estimate_freq <- function(dt_,output,vars)
 }
 
 
+init.ipaq$ipaq_floor <- function(dt_,vars)
+{
+  for(x in vars) { set(dt_,j = k<-paste0(x,'_FLOOR'),value = dt_[,floor(eval(as.name(x)))])}
+}
+
+
 
 init.ipaq$ipaq_estimate_time <- function (dt_, output, freq_est,time_wk)
 {
@@ -115,6 +133,7 @@ init.ipaq$ipaq_estimate_time <- function (dt_, output, freq_est,time_wk)
   set(dt_,i= which(ix),j=output,value = 0.0)
   set(dt_,i=which(!ix), j=output,value = dt_[!ix, eval(time_wk_v)/eval(freq_est_v)])
 }
+
 
 
 init.ipaq$ipaq_div <- function(dt_,var,by,output) 
