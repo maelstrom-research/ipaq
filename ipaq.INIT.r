@@ -147,7 +147,7 @@ init.ipaq$ipaq_div <- function(dt_,var,by,output)
 init.ipaq$ipaq_category <- function(dt_,output,vig_freq,mod_freq,walk_freq,vig_time,mod_time,walk_time,total_met)
 {
   vig_f <- as.name(vig_freq); mod_f <- as.name(mod_freq); walk_f <- as.name(walk_freq);
-  vig_t <- as.name(vig_time); mod_t <- as.name(mod_time);walk_t <- as.name(walk_freq);
+  vig_t <- as.name(vig_time); mod_t <- as.name(mod_time);walk_t <- as.name(walk_time);
   total_m <- as.name(total_met); output_v <- as.name(output)
   dt_[,sum_f := eval(vig_f)+eval(mod_f)+eval(walk_f) ][,mod_plus_walk_f:= eval(mod_f)+eval(walk_f)][,(output) := 1L]
   #high
