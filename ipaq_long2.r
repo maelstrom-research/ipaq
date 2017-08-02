@@ -44,6 +44,10 @@ ipaq_mult(dt_,output = 'PA_WRK_MOD_PARTIAL_MET_FLOOR',vars = c('PA_MOD_FREQ_EST_
 ipaq_sum(dt_,output = 'PA_TOTAL_MOD_MET_L_FLOOR',vars = c('PA_CYCLING_PARTIAL_MET_FLOOR','PA_GARDEN_VIG_PARTIAL_MET_FLOOR','PA_INSIDE_MOD_PARTIAL_MET_FLOOR',
                                                           'PA_GARDEN_MOD_PARTIAL_MET_FLOOR','PA_LEISURE_MOD_PARTIAL_MET_FLOOR','PA_WRK_MOD_PARTIAL_MET_FLOOR'))
 
+
+#adjust MOD intensity with 0.9
+ipaq_mult(dt_,output = 'PA_TOTAL_MOD_MET_L_FLOOR', vars = 'PA_TOTAL_MOD_MET_L_FLOOR', num = 0.9)
+
 # --------------TOTAL SCORE MET--------------------------------
 ipaq_sum(dt_,output = 'PA_TOTAL_MET_L_FLOOR',vars = c('PA_TOTAL_VIG_MET_L_FLOOR','PA_TOTAL_MOD_MET_L_FLOOR','PA_TOTAL_WALK_MET_L_FLOOR'))
 
